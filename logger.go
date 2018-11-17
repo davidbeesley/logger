@@ -1,6 +1,9 @@
 package logger
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 const (
 	_ = iota
@@ -26,26 +29,38 @@ const (
 // Level is the amount of information to be printed to the console. Default is none.
 var Level = NONE
 
+// mux prevents merged printf.
+var mux sync.Mutex
+
 func Debug(format string, v ...interface{}) {
-	fmt.Println(DEBUG);
+
+	mux.Lock()
+	defer mux.Unlock()
+
 	if Level <= DEBUG {
 		fmt.Printf(kCYN+"[DEBUG] "+format+kNRM+"\n", v...)
 	}
 }
 
 func Info(format string, v ...interface{}) {
+	mux.Lock()
+	defer mux.Unlock()
 	if Level <= INFO {
 		fmt.Printf(kMAG+"[INFO] "+format+kNRM+"\n", v...)
 	}
 }
 
 func Warning(format string, v ...interface{}) {
+	mux.Lock()
+	defer mux.Unlock()
 	if Level <= WARNING {
 		fmt.Printf(kYEL+"[WARNING] "+format+kNRM+"\n", v...)
 	}
 }
 
 func Error(format string, v ...interface{}) {
+	mux.Lock()
+	defer mux.Unlock()
 	if Level <= ERROR {
 		fmt.Printf(kRED+"[ERROR] "+format+kNRM+"\n", v...)
 	}

@@ -1,13 +1,28 @@
 package logger
 
-import "testing"
+import (
+	"sync"
+	"testing"
+)
+
+var wg sync.WaitGroup
 
 func TestLogger(t *testing.T) {
 	Level = DEBUG
-	Debug("Debug example")
-	Info("Info example")
-	Warning("Warning example")
-	Error("Error example")
+
+	var count = 20
+	wg.Add(count)
+	for i := 0; i < count; i++ {
+		go func(i int) {
+			defer wg.Done()
+			Debug("Thread example: %d", i)
+		}(i)
+	}
+    Debug("Debug example")
+    Info("Info example")
+    Warning("Warning example")
+    Error("Error example")
+	wg.Wait()
 	/*
 		cases := []struct {
 			in, want string
