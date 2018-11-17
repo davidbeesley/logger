@@ -32,7 +32,19 @@ var Level = NONE
 // mux prevents merged printf.
 var mux sync.Mutex
 
-func Debug(format string, v ...interface{}) {
+func Debug(v ...interface{}) {
+
+	mux.Lock()
+	defer mux.Unlock()
+
+	if Level <= DEBUG {
+		fmt.Print(kCYN + "[DEBUG] ")
+		fmt.Print(v...)
+		fmt.Println(kNRM)
+	}
+}
+
+func Debugf(format string, v ...interface{}) {
 
 	mux.Lock()
 	defer mux.Unlock()
@@ -42,7 +54,19 @@ func Debug(format string, v ...interface{}) {
 	}
 }
 
-func Info(format string, v ...interface{}) {
+func Info(v ...interface{}) {
+
+	mux.Lock()
+	defer mux.Unlock()
+
+	if Level <= INFO {
+		fmt.Print(kMAG + "[INFO] ")
+		fmt.Print(v...)
+		fmt.Println(kNRM)
+	}
+}
+
+func Infof(format string, v ...interface{}) {
 	mux.Lock()
 	defer mux.Unlock()
 	if Level <= INFO {
@@ -50,7 +74,19 @@ func Info(format string, v ...interface{}) {
 	}
 }
 
-func Warning(format string, v ...interface{}) {
+func Warning(v ...interface{}) {
+
+	mux.Lock()
+	defer mux.Unlock()
+
+	if Level <= WARNING {
+		fmt.Print(kYEL + "[WARNING] ")
+		fmt.Print(v...)
+		fmt.Println(kNRM)
+	}
+}
+
+func Warningf(format string, v ...interface{}) {
 	mux.Lock()
 	defer mux.Unlock()
 	if Level <= WARNING {
@@ -58,10 +94,49 @@ func Warning(format string, v ...interface{}) {
 	}
 }
 
-func Error(format string, v ...interface{}) {
+func Error(v ...interface{}) {
+
+	mux.Lock()
+	defer mux.Unlock()
+
+	if Level <= ERROR {
+		fmt.Print(kRED + "[ERROR] ")
+		fmt.Print(v...)
+		fmt.Println(kNRM)
+	}
+}
+
+func Errorf(format string, v ...interface{}) {
 	mux.Lock()
 	defer mux.Unlock()
 	if Level <= ERROR {
 		fmt.Printf(kRED+"[ERROR] "+format+kNRM+"\n", v...)
 	}
+}
+
+func Println(v ...interface{}) {
+
+	mux.Lock()
+	defer mux.Unlock()
+
+	fmt.Println(v...)
+
+}
+
+func Printlnf(format string, v ...interface{}) {
+	mux.Lock()
+	defer mux.Unlock()
+	fmt.Printf(format+"\n", v...)
+}
+
+func Print(v ...interface{}) {
+
+	mux.Lock()
+	defer mux.Unlock()
+	fmt.Print(v...)
+
+}
+
+func Printf(format string, v ...interface{}) {
+	fmt.Printf(format, v...)
 }

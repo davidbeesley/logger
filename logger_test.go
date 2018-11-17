@@ -15,13 +15,16 @@ func TestLogger(t *testing.T) {
 	for i := 0; i < count; i++ {
 		go func(i int) {
 			defer wg.Done()
-			Debug("Thread example: %d", i)
+			Debugf("Thread example: %d", i)
+			Debug("Thread exmample: ", i)
 		}(i)
 	}
-    Debug("Debug example")
-    Info("Info example")
-    Warning("Warning example")
-    Error("Error example")
+	Debug("Debug example")
+	Info("Info example")
+	Warning("Warning example")
+	Error("Error example")
+	Print("Print and ")
+	Println("Println")
 	wg.Wait()
 	/*
 		cases := []struct {
