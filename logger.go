@@ -1,3 +1,4 @@
+/* logger provides color coded logging to the console. It is thread safe. Change information displayed via Level. Functions are in print and printf style*/
 package logger
 
 import (
@@ -5,6 +6,7 @@ import (
 	"sync"
 )
 
+// Valid Debugging levels
 const (
 	_ = iota
 	DEBUG
