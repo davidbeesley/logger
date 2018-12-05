@@ -2,6 +2,7 @@
 super simple logger for debugging go projects
 
 ## Usage
+```go
 var Level = NONE
 func Debug(v ...interface{})
 func Debugf(format string, v ...interface{})
@@ -20,7 +21,7 @@ func Printlnf(format string, v ...interface{})
 
 func Warning(v ...interface{})
 func Warningf(format string, v ...interface{})
-
+```
 
 ## Log levels
 
